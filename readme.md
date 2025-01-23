@@ -45,3 +45,18 @@ El proyecto permite realizar las siguientes operaciones:
 
 
 # Descripción grafica del Proyecto
+
+* Crear
+![image](https://github.com/TakizawaXD/CRUD-Vector/blob/main/img/create.png?raw=true)
+
+Resultados ![image](https://github.com/TakizawaXD/CRUD-Vector/blob/main/img/resultcreate.png?raw=true)
+
+
+* Actualizar
+![image](https://github.com/TakizawaXD/CRUD-Vector/blob/main/img/update.png?raw=true)
+
+* Eliminar
+![image](https://github.com/TakizawaXD/CRUD-Vector/blob/main/img/Borrar.png?raw=true)
+
+
+
