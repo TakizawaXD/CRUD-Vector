@@ -26,30 +26,23 @@ def init_qdrant():
         qdrant_client.create_collection(
             collection_name=COLLECTION_NAME,
             vectors_config=models.VectorParams(
-                size=384,  # Dimensión del modelo de embeddings
+                size=384,
                 distance=models.Distance.COSINE
             )
         )
 
 def insert_vector_qdrant(text, vector):
-    """
-    Inserta un vector en la colección de Qdrant.
-    Genera un UUID basado en el texto para usar como ID.
-    """
-    vector_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, text))  # Genera un UUID único para cada texto
+    vector_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, text))
     qdrant_client.upsert(
         collection_name=COLLECTION_NAME,
         points=[models.PointStruct(
-            id=vector_id,  # Usar UUID como ID
+            id=vector_id,
             payload={"text": text},
             vector=vector
         )]
     )
 
 def fetch_vectors_qdrant():
-    """
-    Obtiene todos los vectores almacenados en Qdrant.
-    """
     response, _ = qdrant_client.scroll(
         collection_name=COLLECTION_NAME,
         scroll_filter=None,
@@ -58,9 +51,6 @@ def fetch_vectors_qdrant():
     return [(point.id, point.payload["text"]) for point in response]
 
 def delete_vector_qdrant(vector_id):
-    """
-    Elimina un vector de la colección en Qdrant.
-    """
     qdrant_client.delete(
         collection_name=COLLECTION_NAME,
         points_selector=[vector_id]
@@ -86,6 +76,9 @@ vectors = fetch_vectors_qdrant()
 if vectors:
     vector_df = pd.DataFrame(vectors, columns=["ID", "Texto"])
     st.dataframe(vector_df)
+else:
+    st.warning("No hay vectores almacenados.")
+
 st.subheader("Eliminar un Vector")
 
 if vectors:
